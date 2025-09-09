@@ -1,0 +1,22 @@
+{
+  "name": "@foundryvtt/token-action-hud-co2e",
+  "foundry": {
+    "id": "token-action-hud-co2e",
+    "name": "Token Action HUD CO2e",
+    "description": "Token Action HUD is a repositionable HUD of actions for a selected token"
+  },
+  "license": "MIT",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "build": "vite build",
+    "typecheck": "tsc --noEmit"
+  },
+  "packageManager": "pnpm@10.15.1",
+  "devDependencies": {
+    "@types/node": "^24.3.1",
+    "ts-node": "^10.9.2",
+    "tslib": "^2.8.1",
+    "typescript": "~5.9.2"
+  }
+}

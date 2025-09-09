@@ -1,0 +1,58 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/TheSmeltingAnvil/fvtt-schemas/main/manifest.json
+# You can rename this file to "module.yml" to build a module instead of a system!
+id: "{{id}}"
+title: "{{name}}"
+description: "{{description}}"
+version: "{{X.Y.Z}}-dev"
+url: "{{URL}}"
+manifest: "{{MANIFEST}}"
+download: "{{DOWNLOAD}}"
+readme: "{{README}}"
+license: "{{LICENSE}}"
+bugs: "{{BUGS}}"
+changelog: "{{CHANGELOG}}"
+authors:
+  - name: LionelL2
+    #url: YOUR WEBSITE ADDRESS HERE
+    #email: YOUR EMAIL ADDRESS HERE
+    #discord: YOUR DISCORD USERNAME HERE
+
+esmodules:
+  - index.mjs
+#scripts:
+#- index.js
+styles:
+  - styles.css
+
+languages:
+  - lang: fr
+    name: Français
+    path: /langs/fr.json
+
+compatibility:
+  minimum: 13
+  verified: "13.348"
+  maximum: 13
+
+relationships:
+  requires:
+    - id: token-action-hud-core
+      type: module
+      compatibility:
+        minimum: "2.0.0"
+        verified: "2.0.10"
+  recommends: []
+  conflicts: []
+  systems:
+    - id: co
+      type: system
+      compatibility:
+        minimum: "13.344"
+        verified: "13.344"
+
+packs: []
+#media:
+#- type: setup
+#  url: /modules/token-action-hud-cof1e/assets/cover.webp
+#  thumbnail: /modules/token-action-hud-cof1e/assets/thumbnail.webp
