@@ -51,7 +51,15 @@ const config = Vite.defineConfig(async ({ mode }: Vite.ConfigEnv): Promise<Vite.
       ...((await foundryvtt({
         copyStaticFiles: {
           root: path.resolve("."),
-          ignore: ["dist", "FoundryVTT", "foundryconfig.json", "foundryconfig.json", "foundryconfig.*.json", "node_modules/**", "pnpm-lock.yaml", "@types"],
+          ignore: [
+            "dist",
+            "FoundryVTT",
+            "foundryconfig.json",
+            "foundryconfig.json",
+            "foundryconfig.*.json",
+            "node_modules/**",
+            "pnpm-lock.yaml",
+          ],
         },
       })) as Vite.Plugin[]),
     ],
