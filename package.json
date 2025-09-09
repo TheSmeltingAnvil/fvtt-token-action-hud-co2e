@@ -10,13 +10,26 @@
   "private": true,
   "scripts": {
     "build": "vite build",
+    "create:link": "gulp link",
+    "delete:link": "gulp link --clean",
+    "dev": "vite",
     "typecheck": "tsc --noEmit"
   },
   "packageManager": "pnpm@10.15.1",
   "devDependencies": {
+    "@foundryvtt/gulp-plugin": "github:TheSmeltingAnvil/fvtt-gulp-plugin",
+    "@foundryvtt/utils": "github:TheSmeltingAnvil/fvtt-utils",
+    "@foundryvtt/vite-plugin": "github:TheSmeltingAnvil/fvtt-vite-plugins#path:packages/vite-plugin",
+    "@tsconfig/recommended": "^1.0.10",
+    "@types/jquery": "^3.5.33",
     "@types/node": "^24.3.1",
+    "gulp": "^5.0.1",
+    "jquery": "^3.7.1",
+    "sass": "^1.92.1",
+    "terser": "^5.44.0",
     "ts-node": "^10.9.2",
     "tslib": "^2.8.1",
-    "typescript": "~5.9.2"
+    "typescript": "~5.9.2",
+    "vite": "7.1.5"
   }
 }
