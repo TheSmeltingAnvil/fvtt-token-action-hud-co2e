@@ -1,8 +1,9 @@
 {
+  "extends": "./tsconfig.base.json",
   "compilerOptions": {
     /* Language and Environment */
     "target": "ESNext",
-    "lib": ["ESNext", "DOM"],
+    "lib": ["ESNext", "DOM", "DOM.Iterable"],
     /* Modules */
     "module": "ESNext",
     "rootDir": "src/",
@@ -29,6 +30,8 @@
     /* Completeness */
     "skipDefaultLibCheck": true,
     "skipLibCheck": true,
+    /* Misc */
+    "tsBuildInfoFile": "dist/.tsbuildinfo"
   },
   "include": ["src/"],
   "exclude": ["node_modules/"],
