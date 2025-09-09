@@ -1,0 +1,50 @@
+{
+  "extends": "@tsconfig/recommended/tsconfig.json",
+  "compilerOptions": {
+    /* Projects */
+    "composite": true,
+    "incremental": true,
+    /* Language and Environment */
+    "target": "ES2022",
+    "lib": ["ES2022"],
+    /* Modules */
+    "module": "ES2022",
+    "moduleResolution": "bundler",
+    "moduleDetection": "force",
+    "resolveJsonModule": true,
+    /* JavaScript Support */
+    "allowJs": false,
+    "checkJs": false,
+    /* Emit */
+    "noEmit": true,
+    "emitBOM": false,
+    /* Interop Constraints */
+    "isolatedModules": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    /* Type Checking */
+    "strict": true,
+    "alwaysStrict": true,
+    "noImplicitAny": true,
+    "noImplicitOverride": true,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "noUncheckedIndexedAccess": true,
+    "noUncheckedSideEffectImports": true,
+    "strictNullChecks": true,
+    "strictFunctionTypes": true,
+    "strictBindCallApply": true,
+    "strictPropertyInitialization": false,
+    /* Completeness */
+    "skipDefaultLibCheck": true,
+    "skipLibCheck": true,
+  },
+  "references": [
+    {
+      "path": "./tsconfig.json",
+    },
+    {
+      "path": "./tsconfig.node.json",
+    },
+  ],
+}
