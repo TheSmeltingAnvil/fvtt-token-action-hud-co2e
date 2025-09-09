@@ -13,6 +13,7 @@
     "create:link": "gulp link",
     "delete:link": "gulp link --clean",
     "dev": "vite",
+    "format": "prettier --write \"./**/*.(ts|js|cjs|mjs|json|yml|scss)\"",
     "typecheck": "tsc --noEmit"
   },
   "packageManager": "pnpm@10.15.1",
@@ -25,6 +26,7 @@
     "@types/node": "^24.3.1",
     "gulp": "^5.0.1",
     "jquery": "^3.7.1",
+    "prettier": "^3.6.2",
     "sass": "^1.92.1",
     "terser": "^5.44.0",
     "ts-node": "^10.9.2",
