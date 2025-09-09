@@ -31,7 +31,7 @@
     "skipDefaultLibCheck": true,
     "skipLibCheck": true,
     /* Misc */
-    "tsBuildInfoFile": "dist/.tsbuildinfo"
+    "tsBuildInfoFile": "dist/.tsbuildinfo",
   },
   "include": ["src/"],
   "exclude": ["node_modules/"],
