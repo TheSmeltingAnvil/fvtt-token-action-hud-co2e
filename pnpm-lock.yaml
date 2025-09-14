@@ -14,9 +14,12 @@ importers:
       '@foundryvtt/gulp-plugin':
         specifier: github:TheSmeltingAnvil/fvtt-gulp-plugin
         version: https://codeload.github.com/TheSmeltingAnvil/fvtt-gulp-plugin/tar.gz/1adefa8b808d9ad214e93389810166a118e6eae7(gulp@5.0.1)
+      '@foundryvtt/types':
+        specifier: github:TheSmeltingAnvil/fvtt-types
+        version: https://codeload.github.com/TheSmeltingAnvil/fvtt-types/tar.gz/4fca90d9d2caee8c8aeb00f6dfa0d6a7ba57ad21
       '@foundryvtt/utils':
         specifier: github:TheSmeltingAnvil/fvtt-utils
-        version: https://codeload.github.com/TheSmeltingAnvil/fvtt-utils/tar.gz/45516a416e3e31083107f73754d3eec8934ef736(gulp@5.0.1)
+        version: https://codeload.github.com/TheSmeltingAnvil/fvtt-utils/tar.gz/3e31a24bb4c9f4886904ec67d4b7c58a6950e38c(gulp@5.0.1)
       '@foundryvtt/vite-plugin':
         specifier: github:TheSmeltingAnvil/fvtt-vite-plugins#path:packages/vite-plugin
         version: https://codeload.github.com/TheSmeltingAnvil/fvtt-vite-plugins/tar.gz/4f171d0b2e84e2d12d70ad726b79ab1107b7ef43#path:packages/vite-plugin(rollup@4.50.1)(vite@7.1.5(@types/node@24.3.1)(jiti@2.5.1)(sass@1.92.1)(terser@5.44.0))
@@ -284,14 +287,12 @@ packages:
     peerDependencies:
       gulp: '>=5.0.0'
 
+  '@foundryvtt/types@https://codeload.github.com/TheSmeltingAnvil/fvtt-types/tar.gz/4fca90d9d2caee8c8aeb00f6dfa0d6a7ba57ad21':
+    resolution: {tarball: https://codeload.github.com/TheSmeltingAnvil/fvtt-types/tar.gz/4fca90d9d2caee8c8aeb00f6dfa0d6a7ba57ad21}
+    version: 13.0.0
+
   '@foundryvtt/utils@https://codeload.github.com/TheSmeltingAnvil/fvtt-utils/tar.gz/3e31a24bb4c9f4886904ec67d4b7c58a6950e38c':
     resolution: {tarball: https://codeload.github.com/TheSmeltingAnvil/fvtt-utils/tar.gz/3e31a24bb4c9f4886904ec67d4b7c58a6950e38c}
-    version: 0.1.0
-    peerDependencies:
-      gulp: '>=5.0.0'
-
-  '@foundryvtt/utils@https://codeload.github.com/TheSmeltingAnvil/fvtt-utils/tar.gz/45516a416e3e31083107f73754d3eec8934ef736':
-    resolution: {tarball: https://codeload.github.com/TheSmeltingAnvil/fvtt-utils/tar.gz/45516a416e3e31083107f73754d3eec8934ef736}
     version: 0.1.0
     peerDependencies:
       gulp: '>=5.0.0'
@@ -2046,17 +2047,9 @@ snapshots:
       js-yaml: 4.1.0
       yargs: 17.7.2
 
-  '@foundryvtt/utils@https://codeload.github.com/TheSmeltingAnvil/fvtt-utils/tar.gz/3e31a24bb4c9f4886904ec67d4b7c58a6950e38c(gulp@5.0.1)':
-    dependencies:
-      classic-level: 2.0.0
-      dotenv: 16.6.1
-      fs-extra: 11.3.1
-      gulp: 5.0.1
-      nedb-promises: 6.2.3
-      picocolors: 1.1.1
-      yargs: 17.7.2
+  '@foundryvtt/types@https://codeload.github.com/TheSmeltingAnvil/fvtt-types/tar.gz/4fca90d9d2caee8c8aeb00f6dfa0d6a7ba57ad21': {}
 
-  '@foundryvtt/utils@https://codeload.github.com/TheSmeltingAnvil/fvtt-utils/tar.gz/45516a416e3e31083107f73754d3eec8934ef736(gulp@5.0.1)':
+  '@foundryvtt/utils@https://codeload.github.com/TheSmeltingAnvil/fvtt-utils/tar.gz/3e31a24bb4c9f4886904ec67d4b7c58a6950e38c(gulp@5.0.1)':
     dependencies:
       classic-level: 2.0.0
       dotenv: 16.6.1
