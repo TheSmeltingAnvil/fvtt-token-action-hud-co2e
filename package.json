@@ -22,6 +22,7 @@
   "devDependencies": {
     "@eslint/js": "^9.35.0",
     "@foundryvtt/gulp-plugin": "github:TheSmeltingAnvil/fvtt-gulp-plugin",
+    "@foundryvtt/types": "github:TheSmeltingAnvil/fvtt-types",
     "@foundryvtt/utils": "github:TheSmeltingAnvil/fvtt-utils",
     "@foundryvtt/vite-plugin": "github:TheSmeltingAnvil/fvtt-vite-plugins#path:packages/vite-plugin",
     "@tsconfig/recommended": "^1.0.10",
