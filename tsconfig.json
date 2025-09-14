@@ -11,7 +11,8 @@
     "baseUrl": "./",
     "rootDirs": ["src/"],
     "resolveJsonModule": true,
-    "types": ["@foundryvtt/types"],
+    "typeRoots": ["node_modules", "@types"],
+    "types": ["@foundryvtt/types", "fvtt-token-action-hud-core"],
     /* JavaScript Support */
     "allowJs": true,
     /* Emit */
