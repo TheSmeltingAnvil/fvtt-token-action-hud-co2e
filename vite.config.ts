@@ -59,6 +59,7 @@ const config = Vite.defineConfig(async ({ mode }: Vite.ConfigEnv): Promise<Vite.
             "foundryconfig.*.json",
             "node_modules/**",
             "pnpm-lock.yaml",
+            "@types",
           ],
         },
       })) as Vite.Plugin[]),
