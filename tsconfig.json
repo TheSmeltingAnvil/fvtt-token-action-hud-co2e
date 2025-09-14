@@ -12,7 +12,7 @@
     "rootDirs": ["src/"],
     "resolveJsonModule": true,
     "typeRoots": ["node_modules", "@types"],
-    "types": ["@foundryvtt/types", "fvtt-token-action-hud-core"],
+    "types": ["@foundryvtt/types", "fvtt-token-action-hud-core", "co2e"],
     /* JavaScript Support */
     "allowJs": true,
     /* Emit */
