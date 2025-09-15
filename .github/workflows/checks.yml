@@ -1,0 +1,127 @@
+name: Checks
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+env:
+  node_version: 24
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install node ${{ env.node_version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.node_version }}
+
+      - uses: pnpm/action-setup@v4
+
+      - name: Cache modules
+        uses: actions/cache@v3
+        id: cache-modules
+        with:
+          path: .pnpm/cache
+          key: ${{ runner.OS }}-pnpm-${{ hashFiles('**/pnpm.json') }}
+          restore-keys: |
+            ${{ runner.OS }}-pnpm-
+            ${{ runner.OS }}-
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Lint
+        run: pnpm lint
+
+  # test:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout code
+  #       uses: actions/checkout@v4
+
+  #     - name: Install node ${{ env.node_version }}
+  #       uses: actions/setup-node@v4
+  #       with:
+  #         node-version: ${{ env.node_version }}
+
+  #     - uses: pnpm/action-setup@v4
+
+  #     - name: Cache modules
+  #       uses: actions/cache@v3
+  #       id: cache-modules
+  #       with:
+  #         path: .pnpm/cache
+  #         key: ${{ runner.OS }}-pnpm-${{ hashFiles('**/pnpm.json') }}
+  #         restore-keys: |
+  #           ${{ runner.OS }}-pnpm-
+  #           ${{ runner.OS }}-
+
+  #     - name: Install dependencies
+  #       run: pnpm install
+
+  #     - name: Test
+  #       run: pnpm test:ci
+
+  typecheck:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install node ${{ env.node_version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.node_version }}
+
+      - uses: pnpm/action-setup@v4
+
+      - name: Cache modules
+        uses: actions/cache@v3
+        id: cache-modules
+        with:
+          path: .pnpm/cache
+          key: ${{ runner.OS }}-pnpm-${{ hashFiles('**/pnpm.json') }}
+          restore-keys: |
+            ${{ runner.OS }}-pnpm-
+            ${{ runner.OS }}-
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Typecheck
+        run: pnpm typecheck
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install node ${{ env.node_version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.node_version }}
+
+      - uses: pnpm/action-setup@v4
+
+      - name: Cache modules
+        uses: actions/cache@v3
+        id: cache-modules
+        with:
+          path: .pnpm/cache
+          key: ${{ runner.OS }}-pnpm-${{ hashFiles('**/pnpm.json') }}
+          restore-keys: |
+            ${{ runner.OS }}-pnpm-
+            ${{ runner.OS }}-
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Build
+        run: pnpm build
