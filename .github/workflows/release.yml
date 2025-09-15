@@ -1,0 +1,116 @@
+name: Create Release
+
+on: workflow_dispatch
+
+env:
+  node_version: 24
+  package_type: module
+
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    outputs:
+      tag: ${{ steps.changelog.outputs.tag }}
+      semver: ${{ steps.changelog.outputs.version }}
+      changelog: ${{ steps.changelog.outputs.clean_changelog }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Conventional Changelog Action
+        id: changelog
+        uses: TriPSs/conventional-changelog-action@v5
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          output-file: false
+          release-count: 0
+          skip-git-pull: true
+          skip-commit: true
+          skip-version-file: true
+
+  build:
+    needs: [prepare]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install node ${{ env.node_version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.node_version }}
+
+      - uses: pnpm/action-setup@v4
+
+      - name: Cache modules
+        uses: actions/cache@v3
+        id: cache-modules
+        with:
+          path: .pnpm/cache
+          key: ${{ runner.OS }}-pnpm-${{ hashFiles('**/pnpm.json') }}
+          restore-keys: |
+            ${{ runner.OS }}-pnpm-
+            ${{ runner.OS }}-
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Build
+        run: pnpm build
+
+      - name: Substitute Manifest and Download Links
+        uses: microsoft/variable-substitution@v1
+        with:
+          files: "dist/${{ env.package_type }}.json"
+        env:
+          version: ${{ needs.prepare.outputs.semver }}
+          url: https://github.com/${{ github.repository }}
+          readme: https://github.com/${{ github.repository }}/blob/main/README.md
+          license: https://github.com/${{ github.repository }}/blob/main/LICENSE
+          bugs: https://github.com/${{ github.repository }}/issues
+          changelog: https://github.com/${{ github.repository }}/releases/tag/${{ needs.prepare.outputs.tag }}
+          manifest: https://github.com/${{ github.repository }}/releases/download/${{ needs.prepare.outputs.tag }}/${{ env.package_type }}.json
+          download: https://github.com/${{ github.repository }}/releases/download/${{ needs.prepare.outputs.tag }}/${{ env.package_type }}.zip
+
+      - name: Archive production artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist
+
+  release:
+    needs: [prepare, build]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      packages: write
+    steps:
+      - name: Download production artifacts for publication
+        uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist
+
+      - name: Create zip file
+        working-directory: ./dist
+        run: zip -r ../${{ env.package_type }}.zip .
+
+      - name: Create release
+        id: create_version_release
+        uses: ncipollo/release-action@v1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          name: ${{ needs.prepare.outputs.tag }}
+          tag: ${{ needs.prepare.outputs.tag }}
+          body: ${{ needs.prepare.outputs.changelog }}
+          artifacts: "./dist/${{ env.package_type }}.json, ./${{ env.package_type }}.zip"
+
+  publish:
+    needs: [prepare, release]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Publish to FoundryVTT
+        uses: TheSmeltingAnvil/fvtt-publish@main
+        with:
+          manifest: https://github.com/${{ github.repository }}/releases/download/${{ needs.prepare.outputs.tag }}/${{ env.package_type }}.json
+          token: ${{ secrets.FOUNDRYVTT_TOKEN }}
