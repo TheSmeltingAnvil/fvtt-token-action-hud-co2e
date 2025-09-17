@@ -17,5 +17,5 @@
     "skipDefaultLibCheck": true,
     "skipLibCheck": true,
   },
-  "include": ["gulpfile.ts", "prettier.config.ts", "vite.config.ts", "vitest.config.ts"],
+  "include": ["tsconfig.json"],
 }

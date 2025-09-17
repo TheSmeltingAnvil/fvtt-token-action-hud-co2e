@@ -1,0 +1,30 @@
+{
+  "name": "@fvtt/testing",
+  "license": "MIT",
+  "type": "module",
+  "packageManager": "pnpm@10.15.1",
+  "keywords": [
+    "foundryvtt",
+    "foundry",
+    "testing",
+    "mocks",
+    "vitest"
+  ],
+  "exports": {
+    ".": {
+      "import": "./src/index.ts",
+      "types": "./src/index.ts"
+    }
+  },
+  "peerDependencies": {
+    "jsdom": "^27.0.0",
+    "vitest": "^3.2.4"
+  },
+  "dependencies": {
+    "@types/jquery": "^3.5.33"
+  },
+  "devDependencies": {
+    "@foundryvtt/types": "github:TheSmeltingAnvil/fvtt-types",
+    "typescript": "^5.9.2"
+  }
+}
