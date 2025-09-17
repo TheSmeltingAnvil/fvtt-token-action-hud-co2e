@@ -1,5 +1,4 @@
 {
-  "extends": "./tsconfig.base.json",
   "compilerOptions": {
     /* Language and Environment */
     "target": "ESNext",
@@ -11,8 +10,7 @@
     "baseUrl": "./",
     "rootDirs": ["src/"],
     "resolveJsonModule": true,
-    "typeRoots": ["node_modules", "@types"],
-    "types": ["@foundryvtt/types", "fvtt-token-action-hud-core", "co2e"],
+    "types": ["@foundryvtt/types"],
     /* JavaScript Support */
     "allowJs": true,
     /* Emit */
