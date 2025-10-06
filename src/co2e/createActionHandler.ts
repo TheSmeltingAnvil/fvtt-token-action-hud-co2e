@@ -1,5 +1,14 @@
 import type { Co2Utils } from "./createUtils";
-import { buildAbilitiesActions } from "./helpers";
+import {
+  buildAbilitiesActions,
+  buildActionsActions,
+  buildCapacitiesActions,
+  buildDefenseActions,
+  buildEffectsActions,
+  buildInventoryActions,
+  buildRecoveryActions,
+  buildResourcesActions,
+} from "./helpers";
 
 /**
  * Factory function to create a Token Action HUD action handler for the CO2e system.
@@ -14,13 +23,13 @@ export default function createActionHandler(coreModule: TokenActionHudCoreModule
      * Only actors of type 'character', 'npc', or 'encounter' are processed.
      */
     override async buildSystemActions(): Promise<void> {
-      const actorType = this.actor.type;
+      const actorType = this.actor?.type;
 
       // Exit if actor is not a known type
-      const knownActors = ["character", "npc", "encounter"];
+      const knownActors = ["character", "encounter"];
       if (actorType && !knownActors.includes(actorType)) return;
 
-      const availableActions = this.#getAvailableActions(actorType);
+      const availableActions = await this.#getAvailableActions(actorType);
       console.debug("CO2-TAH Debug | TokenActionHUDCore | Actions:", availableActions);
       for (const { groupId, actions } of availableActions) {
         this.addActions(actions, { id: groupId, type: "system" });
@@ -32,16 +41,17 @@ export default function createActionHandler(coreModule: TokenActionHudCoreModule
      * @param actorType - The type of actor ('character', 'npc', 'encounter', etc.)
      * @returns Array of group objects, each containing a groupId and actions array.
      */
-    #getAvailableActions(actorType: string): {
-      groupId: string;
-      actions: Action[];
-    }[] {
+    async #getAvailableActions(actorType: string): Promise<
+      {
+        groupId: string;
+        actions: Action[];
+      }[]
+    > {
       switch (actorType) {
         case "character":
-        case "npc":
-          return this.#buildCharacterGroups();
+          return await this.#buildCharacterGroups();
         case "encounter":
-          return this.#buildEncounterGroups();
+          return await this.#buildEncounterGroups();
         default:
           return this.#buildTokensGroups();
       }
@@ -53,22 +63,40 @@ export default function createActionHandler(coreModule: TokenActionHudCoreModule
      * Build action groups for 'character' and 'npc' actors.
      * @returns Array with a single group containing ability actions.
      */
-    #buildCharacterGroups(): {
-      groupId: string;
-      actions: Action[];
-    }[] {
-      return [buildAbilitiesActions(Utils, this.actor)];
+    async #buildCharacterGroups(): Promise<
+      {
+        groupId: string;
+        actions: Action[];
+      }[]
+    > {
+      return [
+        buildAbilitiesActions(Utils, this.actor),
+        buildResourcesActions(Utils, this.actor),
+        buildRecoveryActions(Utils, this.actor),
+        buildDefenseActions(Utils, this.actor),
+        await buildActionsActions(Utils, this.actor),
+        ...buildInventoryActions(Utils, this.actor),
+        ...(await buildCapacitiesActions(Utils, this.actor)),
+        ...(await buildEffectsActions(Utils, this.actor)),
+      ];
     }
 
     /**
      * Build action groups for 'encounter' actors.
      * @returns Array with a single group containing ability actions.
      */
-    #buildEncounterGroups(): {
-      groupId: string;
-      actions: Action[];
-    }[] {
-      return [buildAbilitiesActions(Utils, this.actor)];
+    async #buildEncounterGroups(): Promise<
+      {
+        groupId: string;
+        actions: Action[];
+      }[]
+    > {
+      return [
+        buildAbilitiesActions(Utils, this.actor),
+        buildRecoveryActions(Utils, this.actor),
+        buildDefenseActions(Utils, this.actor),
+        await buildActionsActions(Utils, this.actor),
+      ];
     }
 
     /**

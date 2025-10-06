@@ -2,4 +2,24 @@ CO2:
   Groups:
     Stats: Statistiques
     Abilities: Caractéristiques
+    Resources: Ressources
+
+    Actions: Actions
+    Recovery: Repos
+    Defense: Défense
+
+    Inventory: Inventaire
+    Weapons: Armes
+    Armors: Armures
+    Shields: Boucliers
+    Consumables: Consommables
+    Misc: Divers
+
+    Paths: Voies
+
+    Effects: Effets
+    TemporaryEffects: Effets temporaires
+    PermanentEffects: Effets permanents
+    CustomEffects: Autres effets
+
 tokenActionHud:

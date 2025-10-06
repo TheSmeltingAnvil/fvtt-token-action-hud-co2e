@@ -5,5 +5,5 @@ export const MODULES = {
     Core: { ID: "token-action-hud-core" },
     CO2: { ID: "token-action-hud-co2e" },
   },
-  CO2: { ID: "co" },
+  CO2: { ID: "co2" },
 };
