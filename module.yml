@@ -48,8 +48,8 @@ relationships:
     - id: co2
       type: system
       compatibility:
-        minimum: "13.344"
-        verified: "13.344"
+        minimum: "1.0.0"
+        verified: "1.0.0"
 
 packs: []
 #media:
