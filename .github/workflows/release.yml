@@ -9,13 +9,26 @@ env:
 jobs:
   prepare:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     outputs:
-      tag: ${{ steps.changelog.outputs.tag }}
-      semver: ${{ steps.changelog.outputs.version }}
+      tag: ${{ steps.version.outputs.version-with-prefix }}
+      semver: ${{ steps.version.outputs.version }}
       changelog: ${{ steps.changelog.outputs.clean_changelog }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+
+      - name: Semantic Versioning
+        uses: jveldboom/action-conventional-versioning@v1
+        id: version
+
+      - name: Create git tag
+        env:
+          VERSION: ${{ steps.version.outputs.version-with-prefix }}
+        run: |
+          git tag ${VERSION} ${GITHUB_SHA}
+          git push origin ${VERSION}
 
       - name: Conventional Changelog Action
         id: changelog
@@ -23,11 +36,13 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           output-file: false
-          release-count: 0
+          release-count: 1
           git-push: false
+          skip-bump: true
           skip-git-pull: true
           skip-commit: true
           skip-version-file: true
+          skip-tag: true
 
   build:
     needs: [prepare]
