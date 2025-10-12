@@ -101,6 +101,7 @@ export default function createActionHandler(coreModule: TokenActionHudCoreModule
         buildAttacksActions(Utils, this.actor),
         await buildActionsActions(Utils, this.actor),
         await buildOffPathCapacitiesActions(Utils, this.actor),
+        ...(await buildEffectsActions(Utils, this.actor)),
       ];
     }
 
