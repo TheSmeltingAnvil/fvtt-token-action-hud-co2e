@@ -57,7 +57,8 @@ export default function createDefaultRollHandler(coreModule: TokenActionHudCoreM
           };
 
         case "true,true,false":
-          // right-click (show sheet if any)
+        case "true,false,true":
+          // right-click (show sheet if any) with SHIFT or CTRL for now
           return async () => {
             await this.#showItem(actionType, actionId);
           };
