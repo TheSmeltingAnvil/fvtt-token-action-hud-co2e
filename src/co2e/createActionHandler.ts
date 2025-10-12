@@ -2,6 +2,7 @@ import type { Co2Utils } from "./createUtils";
 import {
   buildAbilitiesActions,
   buildActionsActions,
+  buildAttacksActions,
   buildCapacitiesActions,
   buildDefenseActions,
   buildEffectsActions,
@@ -97,6 +98,7 @@ export default function createActionHandler(coreModule: TokenActionHudCoreModule
         buildAbilitiesActions(Utils, this.actor),
         buildRecoveryActions(Utils, this.actor),
         buildDefenseActions(Utils, this.actor),
+        buildAttacksActions(Utils, this.actor),
         await buildActionsActions(Utils, this.actor),
         await buildOffPathCapacitiesActions(Utils, this.actor),
       ];

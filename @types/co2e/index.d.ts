@@ -23,6 +23,7 @@ declare global {
 
   interface CharacterData {
     abilities: Record<AbilityName, AbilityValue>;
+    attacks: COItem[];
     combat: {
       def: BaseValue;
       magic: BaseValue;

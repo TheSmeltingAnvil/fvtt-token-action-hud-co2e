@@ -89,6 +89,13 @@ export default function createDefaultRollHandler(coreModule: TokenActionHudCoreM
               await this.actor.toggleStatusEffect("fullDef", { active: false });
             return await this.actor.toggleStatusEffect(effect);
           })();
+        case "useAttack":
+          return await (async () => {
+            // @ts-expect-error --IGNORE--
+            const item = (await fromUuid(actionId, { relative: this.actor })) as COItem | null;
+            if (!item) return;
+            return await this.#toggleActionOrEffect(item, 0);
+          })();
         case "useAction":
           return await (async () => {
             const [sourceUuid, indice] = actionId.split(":");
@@ -137,15 +144,24 @@ export default function createDefaultRollHandler(coreModule: TokenActionHudCoreM
       switch (actionType) {
         case "rollAbility":
           return await this.actor.rollSkill(actionId, { withDialog: false });
-        case "useAction":
+        case "useAttack":
           return (async () => {
-            const [sourceUuid, _indice] = actionId.split(":");
             // @ts-expect-error --IGNORE--
-            const item = (await fromUuid(sourceUuid, { relative: this.actor })) as COItem | null;
+            const item = (await fromUuid(actionId, { relative: this.actor })) as COItem | null;
             if (!item) return;
             // @ts-expect-error --IGNORE--
             return this.actor.rollAttack(item, { withDialog: false, skillFormula: "" });
           })();
+        case "useAction":
+          return (async () => {
+            const [sourceUuid, indice] = actionId.split(":");
+            //@ts-expect-error --IGNORE--
+            const source = (await fromUuid(sourceUuid, { relative: this.actor })) as COItem | null;
+            if (!source) return;
+            return await this.#toggleActionOrEffect(source, Number(indice));
+          })();
+        default:
+          return () => Promise.resolve();
       }
     }
 

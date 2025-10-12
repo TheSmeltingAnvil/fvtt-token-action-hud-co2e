@@ -61,51 +61,23 @@ export const buildDefenseActions = (Utils: Co2Utils, _actor: COActor) => {
     .build();
 };
 
-///**
-// * Retourne une Map des actions visibles groupées par type d'action
-// * @returns {Promise<Map<string, Array>>} Map avec les id des types d'actions comme clés et les tableaux d'actions comme valeurs
-// */
-//async function getVisibleActivableActionsByActionType(actor: COActor) {
-//  const allActions = await actor.getVisibleActivableActions();
-//  const actionsByType = new Map();
-
-//  // Initialiser la map avec tous les types d'actions possibles
-//  for (const actionType of Object.values(SYSTEM.ACTION_TYPES)) {
-//    actionsByType.set(actionType.id, []);
-//  }
-
-//  // Grouper les actions par type
-//  for (const action of allActions) {
-//    if (actionsByType.has(action.type)) {
-//      actionsByType.get(action.type).push(action);
-//    }
-//  }
-
-//  return actionsByType;
-//}
-
-///**
-// * Retourne une Map des actions visibles groupées par fréquence d'action
-// * @returns {Promise<Map<string, Array>>} Map avec les id des fréquences d'actions comme clés et les tableaux d'actions comme valeurs
-// */
-//async function getVisibleActionsByActionFrequency(actor: COActor) {
-//  const allActions = await actor.getVisibleActivableActions();
-//  const actionsByFrequency = new Map();
-
-//  // Initialiser la map avec toutes les fréquences d'actions possibles
-//  for (const frequency of Object.values(SYSTEM.CAPACITY_ACTION_TYPE)) {
-//    actionsByFrequency.set(frequency.id, []);
-//  }
-
-//  // Grouper les actions par fréquence
-//  for (const action of allActions) {
-//    if (actionsByFrequency.has(action.frequency)) {
-//      actionsByFrequency.get(action.frequency).push(action);
-//    }
-//  }
-
-//  return actionsByFrequency;
-//}
+export const buildAttacksActions = (Utils: Co2Utils, actor: COActor) => {
+  const actions = actor.system.attacks.reduce(
+    (acc, attack) => {
+      acc[attack.id] = attack;
+      return acc;
+    },
+    {} as Record<string, COItem>,
+  );
+  return new GroupBuilder("attacks", Utils)
+    .with(actions, (builder, action) =>
+      builder
+        .withLabel(action.name)
+        .withIcon(action.actions.length > 0 ? action.actions[0]?.icon : undefined)
+        .withActionType("useAttack", action.uuid),
+    )
+    .build();
+};
 
 export const buildActionsActions = async (Utils: Co2Utils, actor: COActor) => {
   const actions = await actor.getVisibleActivableActions();

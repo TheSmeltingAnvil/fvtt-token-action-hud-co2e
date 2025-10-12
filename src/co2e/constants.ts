@@ -19,6 +19,12 @@ export const groups: Group[] = [
     type: "system",
   },
   {
+    id: "attacks",
+    nestId: "actions_attacks",
+    name: "CO2.Groups.Attacks",
+    type: "system",
+  },
+  {
     id: "actions",
     nestId: "actions_others",
     name: "CO2.Groups.Actions",
