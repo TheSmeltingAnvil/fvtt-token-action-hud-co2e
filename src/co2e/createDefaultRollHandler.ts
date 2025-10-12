@@ -197,7 +197,7 @@ export default function createDefaultRollHandler(coreModule: TokenActionHudCoreM
 
     async #toggleActionOrEffect(source: COItem | COCapacity, indice: number) {
       const state = !source.actions[indice]?.properties.enabled;
-      return await this.actor.activateAction({ state, source: source.uuid, indice });
+      return await this.actor.activateAction({ state, source: source.uuid, indice, shiftKey: this.isShift });
     }
   };
 }
