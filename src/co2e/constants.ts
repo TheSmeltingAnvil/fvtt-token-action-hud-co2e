@@ -142,5 +142,11 @@ export function createLayout(): Layout[] {
     name: path.name,
     type: "system",
   }));
+  pathsLayout!.groups.push({
+    id: "capacities",
+    nestId: "paths_capacities",
+    name: "CO2.Groups.OffPathCapacities",
+    type: "system",
+  });
   return layout;
 }

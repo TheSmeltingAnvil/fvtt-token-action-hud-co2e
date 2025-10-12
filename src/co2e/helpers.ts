@@ -190,18 +190,38 @@ export const buildCapacitiesActions = async (Utils: Co2Utils, actor: COActor) =>
           {} as Record<string, COCapacity>,
         );
       return new GroupBuilder(path.system.slug, Utils)
-        .with(capacities, (builder, item) =>
+        .with(capacities, (builder, capacity) =>
           builder
-            .withLabel(item.name + (item.system.isSpell ? "*" : ""))
-            .withImage(item.img)
-            .withInfo1(`R${item.system.rank}`)
-            .withInfo2(item.system.hasCost ? `Coût: ${item.system.cost}` : "")
-            .withCSSClass(item.system.isSpell ? "spell" : "")
-            .withActionType("useCapacity", item.uuid),
+            .withLabel(capacity.name + (capacity.system.isSpell ? "*" : ""))
+            .withImage(capacity.img)
+            .withInfo1(`R${capacity.system.rank}`)
+            .withInfo2(capacity.system.hasCost && capacity.system.cost ? `Coût: ${capacity.system.cost}` : "")
+            .withCSSClass(capacity.system.isSpell ? "spell" : "")
+            .withActionType("useCapacity", capacity.uuid),
         )
         .build();
     }),
   );
+};
+
+export const buildOffPathCapacitiesActions = async (Utils: Co2Utils, actor: COActor) => {
+  const capacities = actor.capacitiesOffPaths?.reduce(
+    (acc: Record<string, COCapacity>, capacity: COCapacity) => {
+      acc[capacity.uuid.split(".").pop()!] = capacity as COCapacity;
+      return acc;
+    },
+    {} as Record<string, COCapacity>,
+  );
+  return new GroupBuilder("capacities", Utils)
+    .with(capacities, (builder, capacity: COCapacity) =>
+      builder
+        .withLabel(capacity.name)
+        .withImage(capacity.img)
+        .withInfo1(capacity.system.hasCost && capacity.system.cost ? `Coût: ${capacity.system.cost}` : "")
+        .withCSSClass(capacity.system.isSpell ? "spell" : "")
+        .withActionType("useCapacity", capacity.uuid),
+    )
+    .build();
 };
 
 export const buildEffectsActions = async (Utils: Co2Utils, actor: COActor) => {

@@ -171,8 +171,8 @@ declare global {
     get system(): CharacterData;
 
     get actions(): COAction[];
-    get capacities(): { category: string; items: COItem[] };
-    get capacities(): COItem[];
+    get capacities(): { category: string; items: COCapacity[] };
+    get capacitiesOffPaths(): COCapacity[];
     get consumables(): COItem[];
     get equipments(): COItem[];
     get equippedEquipments(): COItem[];

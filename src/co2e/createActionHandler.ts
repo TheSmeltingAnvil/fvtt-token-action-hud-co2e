@@ -6,6 +6,7 @@ import {
   buildDefenseActions,
   buildEffectsActions,
   buildInventoryActions,
+  buildOffPathCapacitiesActions,
   buildRecoveryActions,
   buildResourcesActions,
 } from "./helpers";
@@ -77,6 +78,7 @@ export default function createActionHandler(coreModule: TokenActionHudCoreModule
         await buildActionsActions(Utils, this.actor),
         ...buildInventoryActions(Utils, this.actor),
         ...(await buildCapacitiesActions(Utils, this.actor)),
+        await buildOffPathCapacitiesActions(Utils, this.actor),
         ...(await buildEffectsActions(Utils, this.actor)),
       ];
     }
@@ -96,6 +98,7 @@ export default function createActionHandler(coreModule: TokenActionHudCoreModule
         buildRecoveryActions(Utils, this.actor),
         buildDefenseActions(Utils, this.actor),
         await buildActionsActions(Utils, this.actor),
+        await buildOffPathCapacitiesActions(Utils, this.actor),
       ];
     }
 
