@@ -74,7 +74,7 @@ export const buildAttacksActions = (Utils: Co2Utils, actor: COActor) => {
       builder
         .withLabel(action.name)
         .withIcon(action.actions.length > 0 ? action.actions[0]?.icon : undefined)
-        .withActionType("useAttack", action.uuid),
+        .withActionType("useAttack", `${action.uuid}:${action.actions.length > 0 ? 0 : null}`),
     )
     .build();
 };
