@@ -30,7 +30,7 @@ export const buildResourcesActions = (Utils: Co2Utils, actor: COActor) => {
       builder
         .withLabel(SYSTEM.RESOURCES[key].label)
         .withIcon('<i class="fas fa-fw fa-clover"></i>')
-        .withInfo1(resource.value + (resource.max ? `/${resource.max}` : ""))
+        .withInfo1(`${resource.value ?? 0}` + (resource.max ? `/${resource.max}` : ""))
         .withActionType("rollFortune"),
     )
     .build();
