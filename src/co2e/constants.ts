@@ -139,20 +139,6 @@ const layout: Layout[] = [
   },
 ] as const;
 
-export function createLayout(): Layout[] {
-  const paths = game.items.filter((i) => i.type === "path");
-  const pathsLayout = layout.find((l) => l.id === "paths");
-  pathsLayout!.groups = paths.map((path) => ({
-    id: path.system.slug,
-    nestId: `paths_${path.system.slug}`,
-    name: path.name,
-    type: "system",
-  }));
-  pathsLayout!.groups.push({
-    id: "capacities",
-    nestId: "paths_capacities",
-    name: "CO2.Groups.OffPathCapacities",
-    type: "system",
-  });
+export function getLayout(): Layout[] {
   return layout;
 }

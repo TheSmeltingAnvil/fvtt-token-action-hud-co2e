@@ -1,4 +1,4 @@
-import { createLayout, groups } from "./constants";
+import { getLayout, groups } from "./constants";
 import { Co2Utils } from "./createUtils";
 
 /**
@@ -9,17 +9,17 @@ import { Co2Utils } from "./createUtils";
  * @returns An object containing localized layout and groups arrays.
  */
 export default function createDefaults(Utils: Co2Utils) {
-  const layout = createLayout();
+  const layout = getLayout();
   return {
-    layout: layout.map((layout) => {
+    layout: layout.map((item: Layout) => {
       return {
-        ...layout,
-        listName: `${Utils.i18n("tokenActionHud.group")}: ${Utils.i18n(layout.name)}`,
-        name: Utils.i18n(layout.name),
-        groups: layout.groups.map((g) => ({
-          ...g,
-          listName: `${Utils.i18n("tokenActionHud.group")}: ${Utils.i18n(g.name)}`,
-          name: Utils.i18n(g.name),
+        ...item,
+        listName: `${Utils.i18n("tokenActionHud.group")}: ${Utils.i18n(item.name)}`,
+        name: Utils.i18n(item.name),
+        groups: item.groups.map((group: Group) => ({
+          ...group,
+          listName: `${Utils.i18n("tokenActionHud.group")}: ${Utils.i18n(group.name)}`,
+          name: Utils.i18n(group.name),
         })),
       };
     }),

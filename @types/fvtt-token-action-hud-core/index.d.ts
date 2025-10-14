@@ -94,6 +94,7 @@ declare global {
     hudManager: unknown;
     systemManager: SystemManager<TActor, TToken>;
 
+    addGroup(groupData: Partial<Group>, parentData: Partial<Group>): void;
     addActions(actions: Partial<Action>[], groupData: string | { id: string; type: string });
     buildSystemActions(groupIds: string[]): Promise<void>;
     updateActions(actions: Partial<Action>[], groupData: string | { id: string; type: string });

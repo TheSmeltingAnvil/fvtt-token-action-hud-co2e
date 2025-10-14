@@ -31,11 +31,35 @@ export default function createActionHandler(coreModule: TokenActionHudCoreModule
       const knownActors = ["character", "encounter"];
       if (actorType && !knownActors.includes(actorType)) return;
 
+      if (this.actor) this.#prepareCustomPaths();
+
       const availableActions = await this.#getAvailableActions(actorType);
       console.debug("CO2-TAH Debug | TokenActionHUDCore | Actions:", availableActions);
       for (const { groupId, actions } of availableActions) {
         this.addActions(actions, { id: groupId, type: "system" });
       }
+    }
+
+    #prepareCustomPaths() {
+      const parent = { id: "paths" };
+      for (const path of this.actor.paths) {
+        const {
+          name,
+          system: { slug: id },
+        } = path;
+        const group: Partial<Group> = { id, name, type: "system" };
+        this.addGroup(group, parent);
+      }
+
+      this.addGroup(
+        {
+          id: "capacities",
+          nestId: "paths_capacities",
+          name: Utils.i18n("CO2.Groups.OffPathCapacities"),
+          type: "system",
+        },
+        parent,
+      );
     }
 
     /**
