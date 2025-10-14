@@ -137,7 +137,7 @@ export default function createActionHandler(coreModule: TokenActionHudCoreModule
       groupId: string;
       actions: Action[];
     }[] {
-      return [];
+      return [buildDefenseActions(Utils, this.actor)];
     }
   };
 }
