@@ -1,3 +1,5 @@
+import * as Logger from "../Logger";
+
 /**
  * Factory function to create a Token Action HUD roll handler for the CO2E system.
  * @param coreModule - The Token Action HUD core module instance.
@@ -31,7 +33,7 @@ export default function createDefaultRollHandler(coreModule: TokenActionHudCoreM
      * @param actionId - The identifier for the action.
      */
     async #handleAction(actor: COActor, actionType: string, actionId: string) {
-      console.debug("CO2-TAH Debug | handle action", actionType, actionId);
+      Logger.debug("handle action", actionType, actionId);
       const action = this.#getAction(actionType, actionId);
       if (action) await action();
     }
