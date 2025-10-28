@@ -11,6 +11,7 @@ import {
   buildRecoveryActions,
   buildResourcesActions,
 } from "./helpers";
+import * as Logger from "../Logger";
 
 /**
  * Factory function to create a Token Action HUD action handler for the CO2e system.
@@ -34,7 +35,7 @@ export default function createActionHandler(coreModule: TokenActionHudCoreModule
       if (this.actor) this.#prepareCustomPaths();
 
       const availableActions = await this.#getAvailableActions(actorType);
-      console.debug("CO2-TAH Debug | TokenActionHUDCore | Actions:", availableActions);
+      Logger.debug("Actions:", availableActions);
       for (const { groupId, actions } of availableActions) {
         this.addActions(actions, { id: groupId, type: "system" });
       }
