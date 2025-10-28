@@ -1,4 +1,5 @@
 import { MODULES } from "../constants";
+import * as Logger from "../Logger";
 
 /**
  * Factory function to create a utility class for the Token Action HUD CO2E system.
@@ -20,7 +21,7 @@ export default function createUtils(coreModule: TokenActionHudCoreModule) {
       try {
         return game.settings.get(MODULES.TokenActionHUD.CO2.ID, key) ?? defaultValue ?? null;
       } catch {
-        coreModule.api.Logger.debug(`Setting '${key}' not found`);
+        Logger.error(`Setting '${key}' not found`);
       }
     }
 
@@ -34,9 +35,9 @@ export default function createUtils(coreModule: TokenActionHudCoreModule) {
     static override async setSetting<T>(key: string, value: T | null) {
       try {
         value = await game.settings.set(MODULES.TokenActionHUD.CO2.ID, key, value);
-        coreModule.api.Logger.debug(`Setting '${key}' set to '${value}'`);
+        Logger.debug(`Setting '${key}' set to '${value}'`);
       } catch {
-        coreModule.api.Logger.debug(`Setting '${key}' not found`);
+        Logger.error(`Setting '${key}' not found`);
       }
     }
   };
