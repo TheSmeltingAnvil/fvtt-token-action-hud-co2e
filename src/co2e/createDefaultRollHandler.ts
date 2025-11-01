@@ -92,10 +92,12 @@ export default function createDefaultRollHandler(coreModule: TokenActionHudCoreM
           })();
         case "useAttack":
           return await (async () => {
+            const [sourceUuid, indice] = actionId.split(":");
+            if (!sourceUuid || !indice) return;
             // @ts-expect-error --IGNORE--
-            const item = (await fromUuid(actionId, { relative: this.actor })) as COItem | null;
-            if (!item) return;
-            return await this.#toggleActionOrEffect(item, 0);
+            const source = (await fromUuid(sourceUuid, { relative: this.actor })) as COItem | null;
+            if (!source) return;
+            return await this.#toggleActionOrEffect(source, Number(indice));
           })();
         case "useAction":
           return await (async () => {
