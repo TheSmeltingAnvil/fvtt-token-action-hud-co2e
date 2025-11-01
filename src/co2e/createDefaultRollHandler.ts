@@ -178,7 +178,7 @@ export default function createDefaultRollHandler(coreModule: TokenActionHudCoreM
             // @ts-expect-error --IGNORE--
             const item = (await fromUuid(source, { relative: this.actor })) as COItem | null;
             // @ts-expect-error --IGNORE--
-            return await game.system.api.macros.sendToChat(source, item.name, indice);
+            return await game.system.api.macros.sendToChat(source, item.name, Number(indice));
           })();
       }
     }
