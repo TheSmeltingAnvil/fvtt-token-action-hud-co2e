@@ -1,8 +1,16 @@
+import { MODULES } from "./constants";
+
 export function debug(message: string, ...args: unknown[]): void {
-  // @ts-expect-error --IGNORE--
-  const debug = game.tokenActionHud?.setting?.debug ?? game.settings.get<boolean>("token-action-hud", "debug");
-  if (debug) {
-    console.debug("CO2-TAH [Debug] " + message, ...args);
+  // Should not be used before the "tokenActionHudReady" hook, but just in case, we will catch any errors here.
+  try {
+    const debug =
+      // @ts-expect-error --IGNORE--
+      game.tokenActionHud?.setting?.debug ?? game.settings.get<boolean>(MODULES.TokenActionHUD.Core, "debug");
+    if (debug) {
+      console.debug("CO2-TAH [Debug] " + message, ...args);
+    }
+  } catch {
+    // ignore
   }
 }
 

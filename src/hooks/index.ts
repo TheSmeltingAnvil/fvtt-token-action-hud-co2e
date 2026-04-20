@@ -1,5 +1,5 @@
-import { tokenActionHudCoreApiReady } from "./token-action-hud-core";
+import { tokenActionHudCoreReady } from "./token-action-hud-core";
 
 export const Hooks = {
-  listen: tokenActionHudCoreApiReady.listen,
+  listen: tokenActionHudCoreReady.listen,
 };

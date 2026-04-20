@@ -1,12 +1,14 @@
 export {};
 declare global {
+  // eslint-disable-next-line @typescript-eslint/no-extraneous-class
   class Hooks {
     static call(hook: "tokenActionHudSystemReady", module: TokenActionHudModule): void;
     static on(hook: "tokenActionHudCoreApiReady", fn: (coreModule: TokenActionHudCoreModule) => void): void;
     static on(hook: "tokenActionHudSystemReady", fn: (module: TokenActionHudModule) => void): void;
+    static on(hook: "tokenActionHudReady", fn: () => void): void;
     static once(hook: "tokenActionHudCoreApiReady", fn: (coreModule: TokenActionHudCoreModule) => void): void;
     static once(hook: "tokenActionHudSystemReady", fn: (module: TokenActionHudModule) => void): void;
-    static off(hook: "tokenActionHudCoreApiReady", fn: (coreModule: TokenActionHudCoreModule) => void): void;
+    static once(hook: "tokenActionHudReady", fn: () => void): void;
   }
 
   interface Module extends foundry.packages.Module {
@@ -26,7 +28,7 @@ declare global {
   namespace TokenActionHudModule {
     interface Api {
       requiredCoreModuleVersion: string;
-      SystemManager: { new (): SystemManager };
+      SystemManager: new () => SystemManager;
     }
   }
 
@@ -57,7 +59,7 @@ declare global {
     text: string;
     title: string;
   }
-  interface Action<TSystem = any> {
+  interface Action<TSystem = unknown> {
     id: string;
     name: string;
     /** @deprecated Use system instead! */
@@ -101,14 +103,16 @@ declare global {
   }
 
   class ActionHandlerExtender<
-    TActor extends Actor<TokenDocument> = Actor<TokenDocument>,
-    TToken extends Token<TokenDocument> = Token<TokenDocument>,
+    _TActor extends Actor<TokenDocument> = Actor<TokenDocument>,
+    _TToken extends Token<TokenDocument> = Token<TokenDocument>,
   > {
     extendActionHandler(): void;
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-extraneous-class
   class DataHandler {}
 
+  // eslint-disable-next-line @typescript-eslint/no-extraneous-class
   class Logger {
     static debug(message: string): void;
     static error(message: string | object): void;
@@ -193,6 +197,7 @@ declare global {
     registerStyles(): { class: string; file: string; moduleId: string; name: string }[];
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-extraneous-class
   class Utils {
     static i18n(key: string): string;
     static getSetting<T>(key: string, defaultValue?: T);
@@ -201,7 +206,7 @@ declare global {
     static getModuleTitle(moduleID: string): string;
     static getControlledTokens(): Token[];
     static getFirstControlledTokens(): Token;
-    static getImage(itemData: any);
+    static getImage(itemData: unknown): string;
     static sortItemsByName<TCollection>(items: TCollection): TCollection;
   }
 

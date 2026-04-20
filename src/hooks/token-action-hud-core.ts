@@ -2,24 +2,18 @@ import { createActionHandler, createDefaults, createRollHandler, createSystemMan
 import { MODULES, REQUIRED_CORE_MODULE_VERSION } from "../constants";
 import * as Logger from "../Logger";
 
-export const tokenActionHudCoreApiReady = {
+export const tokenActionHudCoreReady = {
   listen: function () {
-    let Co2SystemManager: typeof SystemManager;
-
     Hooks.once("tokenActionHudCoreApiReady", (coreModule: TokenActionHudCoreModule): void => {
-      Logger.debug("Initialize types.");
+      Logger.info("Initializing...");
       const Co2Utils = createUtils(coreModule);
       const defaults = createDefaults(Co2Utils);
-      Co2SystemManager = createSystemManager(
+      const Co2SystemManager = createSystemManager(
         coreModule,
         createActionHandler(coreModule, Co2Utils),
         createRollHandler(coreModule),
         defaults,
       ) as typeof SystemManager;
-    });
-
-    Hooks.once("tokenActionHudCoreApiReady", (): void => {
-      Logger.debug("Initialize module.");
       // @ts-expect-error --IGNORE--
       const module = game.modules.get<TokenActionHudModule>(MODULES.TokenActionHUD.CO2.ID);
       module.api = {
@@ -29,8 +23,9 @@ export const tokenActionHudCoreApiReady = {
       Hooks.call("tokenActionHudSystemReady", module);
     });
 
-    Hooks.once("tokenActionHudSystemReady", (): void => {
+    Hooks.once("tokenActionHudReady", () => {
       Logger.info("Ready.");
+      Logger.debug("Debug is enabled.");
     });
   },
 };

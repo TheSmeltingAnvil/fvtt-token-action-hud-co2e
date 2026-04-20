@@ -14,7 +14,7 @@ export default function createDefaultRollHandler(coreModule: TokenActionHudCoreM
      * @param _encodedValue - Encoded value containing action details.
      */
     override async handleActionClick(_event: MouseEvent, _encodedValue: string) {
-      const { actionType, actionId } = this.action.system;
+      const { actionType, actionId } = this.action.system as { actionType: string; actionId: string };
       if (this.actor) {
         return await this.#handleAction(this.actor, actionType, actionId);
       }
