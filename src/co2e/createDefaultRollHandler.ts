@@ -168,6 +168,29 @@ export default function createDefaultRollHandler(coreModule: TokenActionHudCoreM
       }
     }
 
+    /////** Execute ternary primary action (CTRL + left-click) */
+    ////async #executeAlternatePrimaryAction(actionType: string, actionId: string) {
+    ////  switch (actionType) {
+    ////    case "useAttack":
+    ////      return (async () => {
+    ////        // @ts-expect-error --IGNORE--
+    ////        const item = (await fromUuid(actionId, { relative: this.actor })) as COItem | null;
+    ////        if (!item) return;
+    ////        // @ts-expect-error --IGNORE--
+    ////        return this.actor.rollAttack(item, { withDialog: false, skillFormula: "" });
+    ////      })();
+    ////    case "useAction":
+    ////      return (async () => {
+    ////        const [sourceUuid, _indice] = actionId.split(":");
+    ////        // @ts-expect-error --IGNORE--
+    ////        const item = (await fromUuid(sourceUuid, { relative: this.actor })) as COItem | null;
+    ////        if (!item) return;
+    ////        // @ts-expect-error --IGNORE--
+    ////        return this.actor.rollAttack(item, { withDialog: false, skillFormula: "" });
+    ////      })();
+    ////  }
+    ////}
+
     /** Send to chat action (right-click) */
     async #sendToChat(actionType: string, actionId: string) {
       switch (actionType) {
