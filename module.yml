@@ -32,24 +32,24 @@ languages:
 
 compatibility:
   minimum: 13
-  verified: "13.348"
-  maximum: 13
+  verified: 14.360
+  maximum: 14
 
 relationships:
   requires:
     - id: token-action-hud-core
       type: module
       compatibility:
-        minimum: "2.0.0"
-        verified: "2.0.10"
+        minimum: 2.0.0
+        verified: 2.1.0
   recommends: []
   conflicts: []
   systems:
     - id: co2
       type: system
-      compatibility:
-        minimum: "1.0.0"
-        verified: "1.0.0"
+      #compatibility:
+      #  minimum: "1.0.0"
+      #  verified: "1.0.0"
 
 packs: []
 #media:
