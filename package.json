@@ -13,7 +13,7 @@
     "create:link": "gulp link",
     "delete:link": "gulp link --clean",
     "dev": "vite",
-    "format": "prettier --write \"./**/*.(ts|js|cjs|mjs|json|yml|scss)\"",
+    "format": "prettier --write .",
     "lint": "eslint src",
     "lint:fix": "eslint --no-ignore --fix src",
     "typecheck": "tsc --noEmit"
