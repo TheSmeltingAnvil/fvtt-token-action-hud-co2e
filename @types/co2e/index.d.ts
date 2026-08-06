@@ -98,6 +98,30 @@ declare global {
     TOKEN_SIZE;
   };
 
+  /**
+   * A defense stance registered by a content module in `game.system.CONST.defenseStances`.
+   * The stance itself is a regular `CONFIG.statusEffects` entry; this record only describes
+   * the button used to toggle it.
+   */
+  interface CODefenseStance {
+    id: string;
+    icon: string;
+    activateLabel: string;
+    deactivateLabel: string;
+  }
+
+  /**
+   * A rest action registered by a content module in `game.system.CONST.restActions`.
+   * Recovery rules belong to the setting, but the mechanics themselves stay in the system:
+   * `handler` is expected to call into it.
+   */
+  interface CORestAction {
+    id: string;
+    icon: string;
+    label: string;
+    handler: (actor: COActor) => Promise<void> | void;
+  }
+
   interface COAction extends Action {
     actionImg?: string;
     charges: number;
