@@ -121,7 +121,8 @@ export default function createActionHandler(coreModule: TokenActionHudCoreModule
     > {
       return [
         buildAbilitiesActions(Utils, this.actor),
-        buildRecoveryActions(Utils, this.actor),
+        // No recovery group here: `useRecovery()` only exists on CharacterData, and the system's
+        // own encounter sheet has no rest button either.
         buildDefenseActions(Utils, this.actor),
         buildAttacksActions(Utils, this.actor),
         await buildActionsActions(Utils, this.actor),
