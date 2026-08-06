@@ -1,3 +1,4 @@
+import { getDefenseStances, getRestActions } from "./helpers";
 import * as Logger from "../Logger";
 
 /**
@@ -78,19 +79,18 @@ export default function createDefaultRollHandler(coreModule: TokenActionHudCoreM
         case "rollFortune":
           return await this.actor.system.rollFortune();
         case "useRecovery":
-          return await this.actor.system.useRecovery(actionId === "full");
+          return await getRestActions()
+            .find((rest) => rest.id === actionId)
+            ?.handler(this.actor);
         case "useDefense":
           return await (async () => {
-            const effect = actionId as "fullDef" | "partialDef";
-            const hasFullDef = this.actor.hasEffect("fullDef");
-            const hasPartialDef = this.actor.hasEffect("partialDef");
-            // Adapted from COBaseActorSheet._handleDef() in CO2
-            // Prevent activating both defenses at the same time
-            if (effect === "fullDef" && !hasFullDef && hasPartialDef)
-              await this.actor.toggleStatusEffect("partialDef", { active: false });
-            if (effect === "partialDef" && !hasPartialDef && hasFullDef)
-              await this.actor.toggleStatusEffect("fullDef", { active: false });
-            return await this.actor.toggleStatusEffect(effect);
+            // Only one stance at a time: turn off the active ones before toggling this one.
+            // Compare with COActor#canActivateDefenseStance() in CO2, which refuses instead of switching.
+            const others = getDefenseStances().filter(
+              (stance) => stance.id !== actionId && this.actor.hasEffect(stance.id),
+            );
+            for (const other of others) await this.actor.toggleStatusEffect(other.id, { active: false });
+            return await this.actor.toggleStatusEffect(actionId);
           })();
         case "useAttack":
           return await (async () => {

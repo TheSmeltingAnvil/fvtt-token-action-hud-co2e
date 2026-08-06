@@ -36,11 +36,38 @@ export const buildResourcesActions = (Utils: Co2Utils, actor: COActor) => {
     .build();
 };
 
+/** Rest actions shipped by CO2 itself, before 2.3.0 moved them out to content modules. */
+const LEGACY_REST_ACTIONS: CORestAction[] = [
+  {
+    id: "full",
+    icon: "fa-solid fa-bed",
+    label: "CO.ui.fullRest",
+    handler: (actor) => actor.system.useRecovery(true),
+  },
+  {
+    id: "fast",
+    icon: "fa-solid fa-mug-saucer",
+    label: "CO.ui.fastRest",
+    handler: (actor) => actor.system.useRecovery(false),
+  },
+];
+
+/**
+ * The rest actions declared by the active content module (cof2-base for COF2).
+ * Same story as {@link getDefenseStances}: since CO2 2.3.0 recovery rules belong to the setting,
+ * so the system only exposes an empty registry and keeps the mechanics themselves.
+ */
+export const getRestActions = (): CORestAction[] =>
+  (game.system as unknown as { CONST?: { restActions?: CORestAction[] } }).CONST?.restActions ?? LEGACY_REST_ACTIONS;
+
 export const buildRecoveryActions = (Utils: Co2Utils, _actor: COActor) => {
-  const actions = {
-    full: { name: "CO.ui.fullRest", icon: "<i class='fa-solid fa-bed'></i>" },
-    fast: { name: "CO.ui.fastRest", icon: "<i class='fa-solid fa-mug-saucer'></i>" },
-  };
+  const actions = getRestActions().reduce(
+    (acc, rest) => {
+      acc[rest.id] = { name: rest.label, icon: `<i class="${rest.icon}"></i>` };
+      return acc;
+    },
+    {} as Record<string, { name: string; icon: string }>,
+  );
   return new GroupBuilder("recovery", Utils)
     .with(actions, (builder, action) =>
       builder.withLabel(action.name).withIcon(action.icon).withActionType("useRecovery"),
@@ -48,11 +75,45 @@ export const buildRecoveryActions = (Utils: Co2Utils, _actor: COActor) => {
     .build();
 };
 
-export const buildDefenseActions = (Utils: Co2Utils, _actor: COActor) => {
-  const actions = {
-    fullDef: { name: "CO.customStatus.fullDef", icon: "<i class='fa-solid fa-shield'></i>" },
-    partialDef: { name: "CO.customStatus.partialDef", icon: "<i class='fa-solid fa-shield-halved'></i>" },
-  };
+/** Defense stances shipped by CO2 itself, before 2.3.0 moved them out to content modules. */
+const LEGACY_DEFENSE_STANCES: CODefenseStance[] = [
+  {
+    id: "fullDef",
+    icon: "fa-solid fa-shield",
+    activateLabel: "CO.customStatus.fullDef",
+    deactivateLabel: "CO.customStatus.fullDef",
+  },
+  {
+    id: "partialDef",
+    icon: "fa-solid fa-shield-halved",
+    activateLabel: "CO.customStatus.partialDef",
+    deactivateLabel: "CO.customStatus.partialDef",
+  },
+];
+
+/**
+ * The defense stances declared by the active content module (cof2-base for COF2).
+ * Since CO2 2.3.0 defense stances are no longer part of the system: it only exposes an empty
+ * registry that each content module fills on its own `init` hook. An empty registry therefore
+ * means the current setting has no defense stances at all and nothing should be displayed.
+ * A missing registry means a system older than 2.3.0, where both stances were built in.
+ */
+export const getDefenseStances = (): CODefenseStance[] =>
+  (game.system as unknown as { CONST?: { defenseStances?: CODefenseStance[] } }).CONST?.defenseStances ??
+  LEGACY_DEFENSE_STANCES;
+
+export const buildDefenseActions = (Utils: Co2Utils, actor: COActor) => {
+  const actions = getDefenseStances().reduce(
+    (acc, stance) => {
+      const active = actor?.hasEffect(stance.id) ?? false;
+      acc[stance.id] = {
+        name: active ? stance.deactivateLabel : stance.activateLabel,
+        icon: `<i class="${stance.icon}"></i>`,
+      };
+      return acc;
+    },
+    {} as Record<string, { name: string; icon: string }>,
+  );
   return new GroupBuilder("defense", Utils)
     .with(
       actions,
