@@ -57,8 +57,9 @@ const LEGACY_REST_ACTIONS: CORestAction[] = [
  * Same story as {@link getDefenseStances}: since CO2 2.3.0 recovery rules belong to the setting,
  * so the system only exposes an empty registry and keeps the mechanics themselves.
  */
-export const getRestActions = (): CORestAction[] =>
-  (game.system as unknown as { CONST?: { restActions?: CORestAction[] } }).CONST?.restActions ?? LEGACY_REST_ACTIONS;
+export const getRestActions = (): CORestAction[] => {
+  return game.system.CONST && game.system.CONST.restActions ? game.system.CONST.restActions : LEGACY_REST_ACTIONS;
+};
 
 export const buildRecoveryActions = (Utils: Co2Utils, _actor: COActor) => {
   const actions = getRestActions().reduce(
@@ -99,8 +100,7 @@ const LEGACY_DEFENSE_STANCES: CODefenseStance[] = [
  * A missing registry means a system older than 2.3.0, where both stances were built in.
  */
 export const getDefenseStances = (): CODefenseStance[] =>
-  (game.system as unknown as { CONST?: { defenseStances?: CODefenseStance[] } }).CONST?.defenseStances ??
-  LEGACY_DEFENSE_STANCES;
+  game.system.CONST && game.system.CONST.defenseStances ? game.system.CONST.defenseStances : LEGACY_DEFENSE_STANCES;
 
 export const buildDefenseActions = (Utils: Co2Utils, actor: COActor) => {
   const actions = getDefenseStances().reduce(
