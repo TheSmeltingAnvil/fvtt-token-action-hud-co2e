@@ -32,7 +32,7 @@ languages:
 
 compatibility:
   minimum: 13
-  verified: 14.360
+  verified: 14.364
   maximum: 14
 
 relationships:
@@ -41,7 +41,7 @@ relationships:
       type: module
       compatibility:
         minimum: 2.0.0
-        verified: 2.1.0
+        verified: 2.1.1
   recommends: []
   conflicts: []
   systems:
